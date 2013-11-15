@@ -1018,6 +1018,15 @@ compare_files (struct comparison const *parent,
   char *free0;
   char *free1;
 
+  /* Skip ignore directory and files.  */
+  if ((name0 && !strcmp(name0, ".svn"))
+    ||(name1 && !strcmp(name1, ".svn")))
+    {
+      /* Return EXIT_FAILURE so that diff_dirs will return
+      EXIT_FAILURE ("some files differ").  */
+      return EXIT_FAILURE;
+    }
+
   /* If this is directory comparison, perhaps we have a file
      that exists only in one of the directories.
      If so, just print a message to that effect.  */
